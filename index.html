@@ -116,7 +116,7 @@ header { display: grid; gap: 6px; }
     </div>
     <div id="drop" class="drop">
       <strong>把團體照拖進來，或按「載入照片」，也可以直接貼上（Ctrl / ⌘ + V）</strong>
-      <span>原圖：<a href="https://www.nogizaka46.com/images/46/93e/41ad4c60e90c68aa2c57c1580c6b8.jpg" target="_blank" rel="noopener">乃木坂46 團體照</a>（先另存到裝置，再載入這裡）</span>
+      <span>載入乃木坂46「それぞれの椅子」封面（600×532）會自動框好 21 個人，其他照片就自己框。</span>
       <span class="hint">照片只存在你自己的瀏覽器，不會上傳。</span>
     </div>
     <div id="stageWrap" hidden>
@@ -186,6 +186,35 @@ header { display: grid; gap: 6px; }
     { name: "雙手交握在前", cue: "雙手輕握放在腰前，站姿端正，適合正式合照。", j: { le:[36,62], la:[48,80], re:[64,62], ra:[52,80] } },
     { name: "單手揮手交叉腳", cue: "一手高舉揮手，雙腳交叉，身體微微側。", body: { ...STAND, lk:[47,112], rk:[53,112], lf:[57,145], rf:[43,145] }, j: { le:[34,60], la:[34,80], re:[73,26], ra:[78,8] } },
   ];
+
+  // ---------- preset: 乃木坂46「それぞれの椅子」封面 (600×532), pixel boxes [x0, y0, x1, y1, name] ----------
+  const PRESET = { w: 600, h: 532, title: "それぞれの椅子", boxes: [
+    [175, 265, 300, 483, "C 位：雙臂張開、後踢腿往前跑"],
+    [302, 267, 445, 480, "雙手往後擺、後腳勾起小跳"],
+    [60, 250, 138, 425, "雙手扶頭、大步往後踢腿"],
+    [27, 235, 98, 385, "一手往外伸、踮腳轉身"],
+    [400, 252, 470, 422, "雙臂往下打開、交叉步"],
+    [445, 245, 500, 388, "側身伸手牽旁邊的人"],
+    [495, 245, 560, 385, "拉開裙擺轉圈"],
+    [135, 230, 173, 353, "雙手放下、踮腳站定"],
+    [178, 235, 225, 390, "一手抬到胸前、側身走步"],
+    [307, 242, 355, 350, "手撥頭髮、身體微側"],
+    [257, 225, 288, 330, "手扶腰、單腳屈膝"],
+    [380, 232, 425, 350, "單手往上揮"],
+    [480, 232, 510, 360, "手放臉旁、身體微傾"],
+    [75, 200, 115, 260, "雙手往兩側張開"],
+    [282, 202, 305, 265, "雙手高舉過頭伸展"],
+    [347, 202, 373, 272, "單手插腰、單腳彎起"],
+    [135, 195, 155, 240, "單手高舉揮手"],
+    [155, 195, 178, 240, "手舉到頭邊"],
+    [222, 205, 250, 270, "雙手舉高歡呼"],
+    [545, 210, 572, 265, "單手往外伸、回頭看"],
+    [450, 202, 478, 262, "雙手在胸前、小碎步"],
+  ] };
+  const matchesPreset = (im) => Math.abs(im.naturalWidth / im.naturalHeight - PRESET.w / PRESET.h) < 0.01;
+  const presetBoxes = () => PRESET.boxes.map(([x0, y0, x1, y1, name], i) => ({
+    id: i + 1, x: x0 / PRESET.w, y: y0 / PRESET.h, w: (x1 - x0) / PRESET.w, h: (y1 - y0) / PRESET.h, name,
+  }));
 
   // ---------- state ----------
   let img = null;          // HTMLImageElement of the loaded photo
@@ -304,7 +333,8 @@ header { display: grid; gap: 6px; }
       const d = document.createElement("div");
       d.className = "box" + (b.id === selected ? " sel" : "");
       Object.assign(d.style, { left: b.x * 100 + "%", top: b.y * 100 + "%", width: b.w * 100 + "%", height: b.h * 100 + "%" });
-      const label = String(b.id).padStart(2, "0") + (b.name ? " " + b.name : "");
+      const label = String(b.id).padStart(2, "0");
+      d.title = b.name || "";
       d.innerHTML = `<span class="tag"></span><button class="x" aria-label="刪除第 ${b.id} 號">×</button>`;
       d.querySelector(".tag").textContent = label;
       d.addEventListener("pointerdown", (e) => e.stopPropagation());
@@ -359,7 +389,13 @@ header { display: grid; gap: 6px; }
     const im = new Image();
     im.onload = () => {
       img = im; imgBlob = blob; photo.src = url;
-      if (!keepBoxes) { boxes = []; seq = 1; selected = null; }
+      if (!keepBoxes) {
+        selected = null;
+        if (matchesPreset(im)) {
+          boxes = presetBoxes(); seq = boxes.length + 1;
+          toast(`認出「${PRESET.title}」封面，已自動框好 ${boxes.length} 個人`);
+        } else { boxes = []; seq = 1; }
+      }
       $("drop").hidden = true; $("stageWrap").hidden = false; $("removePhoto").hidden = false;
       refresh(); if (!keepBoxes) save();
     };
@@ -457,7 +493,10 @@ header { display: grid; gap: 6px; }
   // ---------- boot ----------
   renderGrid();
   openDB().then(() => dbGet("state")).then((s) => {
-    if (s && s.blob) { boxes = s.boxes || []; seq = s.seq || boxes.length + 1; loadBlob(s.blob, true); }
+    if (s && s.blob) { boxes = s.boxes || []; seq = s.seq || boxes.length + 1; loadBlob(s.blob, true); return; }
+    if (s) return; // the viewer removed the photo on purpose
+    // a photo.jpg published next to the page loads automatically
+    fetch("photo.jpg").then((r) => (r.ok ? r.blob() : null)).then((b) => { if (b && /^image\//.test(b.type)) loadBlob(b); }).catch(() => {});
   });
 })();
 </script>
