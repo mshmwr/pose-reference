@@ -1,0 +1,181 @@
+{
+  "photos": [
+    {
+      "id": "sorezore-no-isu",
+      "title": "乃木坂46「それぞれの椅子」",
+      "file": "photos/sorezore-no-isu.jpg",
+      "w": 600,
+      "h": 532
+    }
+  ],
+  "poses": [
+    {
+      "id": "sorezore-no-isu-01",
+      "photo": "sorezore-no-isu",
+      "box": [175, 265, 300, 483],
+      "name": "C 位：雙臂張開、後踢腿往前跑",
+      "gender": "female",
+      "tags": ["動態"]
+    },
+    {
+      "id": "sorezore-no-isu-02",
+      "photo": "sorezore-no-isu",
+      "box": [302, 267, 445, 480],
+      "name": "雙手往後擺、後腳勾起小跳",
+      "gender": "female",
+      "tags": ["動態"]
+    },
+    {
+      "id": "sorezore-no-isu-03",
+      "photo": "sorezore-no-isu",
+      "box": [60, 250, 138, 425],
+      "name": "雙手扶頭、大步往後踢腿",
+      "gender": "female",
+      "tags": ["動態"]
+    },
+    {
+      "id": "sorezore-no-isu-04",
+      "photo": "sorezore-no-isu",
+      "box": [27, 235, 98, 385],
+      "name": "一手往外伸、踮腳轉身",
+      "gender": "female",
+      "tags": ["動態"]
+    },
+    {
+      "id": "sorezore-no-isu-05",
+      "photo": "sorezore-no-isu",
+      "box": [400, 252, 470, 422],
+      "name": "雙臂往下打開、交叉步",
+      "gender": "female",
+      "tags": ["動態"]
+    },
+    {
+      "id": "sorezore-no-isu-06",
+      "photo": "sorezore-no-isu",
+      "box": [445, 245, 500, 388],
+      "name": "側身伸手牽旁邊的人",
+      "gender": "female",
+      "tags": ["互動"]
+    },
+    {
+      "id": "sorezore-no-isu-07",
+      "photo": "sorezore-no-isu",
+      "box": [495, 245, 560, 385],
+      "name": "拉開裙擺轉圈",
+      "gender": "female",
+      "tags": ["動態"]
+    },
+    {
+      "id": "sorezore-no-isu-08",
+      "photo": "sorezore-no-isu",
+      "box": [135, 230, 173, 353],
+      "name": "雙手放下、踮腳站定",
+      "gender": "female",
+      "tags": ["站姿"]
+    },
+    {
+      "id": "sorezore-no-isu-09",
+      "photo": "sorezore-no-isu",
+      "box": [178, 235, 225, 390],
+      "name": "一手抬到胸前、側身走步",
+      "gender": "female",
+      "tags": ["動態"]
+    },
+    {
+      "id": "sorezore-no-isu-10",
+      "photo": "sorezore-no-isu",
+      "box": [307, 242, 355, 350],
+      "name": "手撥頭髮、身體微側",
+      "gender": "female",
+      "tags": ["手勢"]
+    },
+    {
+      "id": "sorezore-no-isu-11",
+      "photo": "sorezore-no-isu",
+      "box": [257, 225, 288, 330],
+      "name": "手扶腰、單腳屈膝",
+      "gender": "female",
+      "tags": ["站姿"]
+    },
+    {
+      "id": "sorezore-no-isu-12",
+      "photo": "sorezore-no-isu",
+      "box": [380, 232, 425, 350],
+      "name": "單手往上揮",
+      "gender": "female",
+      "tags": ["手勢"]
+    },
+    {
+      "id": "sorezore-no-isu-13",
+      "photo": "sorezore-no-isu",
+      "box": [480, 232, 510, 360],
+      "name": "手放臉旁、身體微傾",
+      "gender": "female",
+      "tags": ["手勢"]
+    },
+    {
+      "id": "sorezore-no-isu-14",
+      "photo": "sorezore-no-isu",
+      "box": [75, 200, 115, 260],
+      "name": "雙手往兩側張開",
+      "gender": "female",
+      "tags": ["手勢"]
+    },
+    {
+      "id": "sorezore-no-isu-15",
+      "photo": "sorezore-no-isu",
+      "box": [282, 202, 305, 265],
+      "name": "雙手高舉過頭伸展",
+      "gender": "female",
+      "tags": ["手勢"]
+    },
+    {
+      "id": "sorezore-no-isu-16",
+      "photo": "sorezore-no-isu",
+      "box": [347, 202, 373, 272],
+      "name": "單手插腰、單腳彎起",
+      "gender": "female",
+      "tags": ["站姿"]
+    },
+    {
+      "id": "sorezore-no-isu-17",
+      "photo": "sorezore-no-isu",
+      "box": [135, 195, 155, 240],
+      "name": "單手高舉揮手",
+      "gender": "female",
+      "tags": ["手勢"]
+    },
+    {
+      "id": "sorezore-no-isu-18",
+      "photo": "sorezore-no-isu",
+      "box": [155, 195, 178, 240],
+      "name": "手舉到頭邊",
+      "gender": "female",
+      "tags": ["手勢"]
+    },
+    {
+      "id": "sorezore-no-isu-19",
+      "photo": "sorezore-no-isu",
+      "box": [222, 205, 250, 270],
+      "name": "雙手舉高歡呼",
+      "gender": "female",
+      "tags": ["手勢"]
+    },
+    {
+      "id": "sorezore-no-isu-20",
+      "photo": "sorezore-no-isu",
+      "box": [545, 210, 572, 265],
+      "name": "單手往外伸、回頭看",
+      "gender": "female",
+      "tags": ["手勢"]
+    },
+    {
+      "id": "sorezore-no-isu-21",
+      "photo": "sorezore-no-isu",
+      "box": [450, 202, 478, 262],
+      "name": "雙手在胸前、小碎步",
+      "gender": "female",
+      "tags": ["動態"]
+    }
+  ]
+}
