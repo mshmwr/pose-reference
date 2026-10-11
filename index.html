@@ -1,0 +1,465 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>拍照 Pose 範本</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: contact-sheet studio — the group photo is the light table, each framed person becomes a numbered frame on the sheet below. */
+:root {
+  --paper: #f6f4f8;
+  --sheet: #ffffff;
+  --ink: #221b29;
+  --muted: #6d6476;
+  --line: #ddd6e3;
+  --accent: #7b2d8e;      /* 乃木坂 purple, toned down */
+  --accent-soft: #efe2f3;
+  --frame: #f2b73a;       /* grease-pencil yellow for crop marks */
+  --stage: #1d1822;
+  --display: "Dela Gothic One", "Zen Kaku Gothic New", system-ui, sans-serif;
+  --body: "Zen Kaku Gothic New", "Noto Sans TC", "PingFang TC", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #17131b; --sheet: #211b27; --ink: #efe9f3; --muted: #a79dae; --line: #3a3241;
+    --accent: #c78bd8; --accent-soft: #33253b; --frame: #f2c45a; --stage: #0d0a10; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #17131b; --sheet: #211b27; --ink: #efe9f3; --muted: #a79dae; --line: #3a3241;
+  --accent: #c78bd8; --accent-soft: #33253b; --frame: #f2c45a; --stage: #0d0a10; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--body); font-size: 15px; line-height: 1.6; }
+.wrap { max-width: 1120px; margin: 0 auto; padding-inline: 16px; padding-block: 28px 64px; display: grid; gap: 28px; }
+h1 { font-family: var(--display); font-weight: 400; font-size: clamp(30px, 6vw, 52px); line-height: 1.05; margin: 0; letter-spacing: .02em; text-wrap: balance; }
+h2 { font-family: var(--display); font-weight: 400; font-size: 22px; margin: 0; }
+.eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); }
+.lede { color: var(--muted); max-width: 62ch; margin: 8px 0 0; }
+header { display: grid; gap: 6px; }
+
+.btn { font: 500 14px var(--body); border: 1px solid var(--line); background: var(--sheet); color: var(--ink); padding: 8px 14px; border-radius: 6px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+.btn:hover { border-color: var(--accent); }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--sheet); }
+.btn:focus-visible, input:focus-visible, select:focus-visible { outline: 2px solid var(--frame); outline-offset: 2px; }
+.btn[disabled] { opacity: .45; cursor: default; }
+.row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+
+/* light table */
+.table { background: var(--sheet); border: 1px solid var(--line); border-radius: 10px; padding: 16px; display: grid; gap: 14px; }
+.table-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; align-items: baseline; }
+.hint { color: var(--muted); font-size: 13px; margin: 0; }
+.drop { border: 2px dashed var(--line); border-radius: 8px; padding: 36px 16px; text-align: center; display: grid; gap: 10px; justify-items: center; color: var(--muted); }
+.drop.over { border-color: var(--accent); background: var(--accent-soft); }
+.drop code { font-family: var(--mono); font-size: 12px; word-break: break-all; }
+.stagebox { position: relative; user-select: none; touch-action: none; cursor: crosshair; line-height: 0; border-radius: 6px; overflow: hidden; background: var(--stage); }
+.stagebox img { width: 100%; display: block; pointer-events: none; }
+.box { position: absolute; border: 2px solid var(--frame); box-shadow: 0 0 0 1px rgba(0,0,0,.35); cursor: pointer; }
+.box.sel { border-color: var(--accent); box-shadow: 0 0 0 3px var(--frame); }
+.box .tag { position: absolute; left: -2px; top: -2px; transform: translateY(-100%); background: var(--frame); color: #221b29; font: 500 11px/1 var(--mono); padding: 3px 5px; white-space: nowrap; }
+.box .x { position: absolute; right: -2px; top: -2px; width: 22px; height: 22px; border: 0; background: var(--frame); color: #221b29; font: 700 14px/22px var(--body); cursor: pointer; padding: 0; }
+.box.temp { border-style: dashed; pointer-events: none; }
+
+/* contact sheet */
+.sheet-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; align-items: end; }
+.sample-note { font: 500 12px var(--mono); color: var(--accent); background: var(--accent-soft); padding: 3px 8px; border-radius: 4px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 16px; }
+.card { background: var(--sheet); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; display: grid; grid-template-rows: auto auto; }
+.card.sel { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-soft); }
+.card canvas { width: 100%; aspect-ratio: 3 / 4; display: block; background: var(--stage); cursor: zoom-in; max-width: 100%; }
+.card .meta { padding: 10px; display: grid; gap: 6px; min-width: 0; }
+.frame-no { font: 500 11px var(--mono); letter-spacing: .12em; color: var(--muted); font-variant-numeric: tabular-nums; }
+.card input { width: 100%; font: 500 14px var(--body); color: var(--ink); background: transparent; border: 0; border-bottom: 1px dashed var(--line); padding: 2px 0; }
+.card .cue { font-size: 12.5px; color: var(--muted); margin: 0; }
+.empty { color: var(--muted); padding: 24px; text-align: center; border: 1px dashed var(--line); border-radius: 8px; }
+
+/* practice overlay */
+.practice { position: fixed; inset: 0; z-index: 10; background: var(--stage); color: #f3edf6; display: grid; grid-template-rows: auto 1fr auto; padding: calc(12px + env(safe-area-inset-top, 0px)) 16px calc(16px + env(safe-area-inset-bottom, 0px)); gap: 12px; }
+.practice .top { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+.practice .title { font-family: var(--display); font-size: clamp(20px, 4vw, 32px); }
+.practice .count { font: 500 13px var(--mono); color: #b9adc2; font-variant-numeric: tabular-nums; }
+.practice canvas { width: 100%; height: 100%; min-height: 0; object-fit: contain; display: block; }
+.practice canvas.mirror { transform: scaleX(-1); }
+.practice .ctrl { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; align-items: center; }
+.practice .btn { background: #2c2433; border-color: #4a3f53; color: #f3edf6; }
+.practice .btn.on { background: var(--frame); border-color: var(--frame); color: #221b29; }
+.practice select { font: 500 14px var(--body); background: #2c2433; color: #f3edf6; border: 1px solid #4a3f53; border-radius: 6px; padding: 8px; }
+.progress { height: 4px; background: #3a3142; border-radius: 2px; overflow: hidden; }
+.progress i { display: block; height: 100%; width: 0; background: var(--frame); }
+.big-count { position: absolute; inset: 0; display: grid; place-items: center; font: 400 min(40vw, 260px) var(--display); color: var(--frame); pointer-events: none; text-shadow: 0 4px 30px rgba(0,0,0,.5); }
+.toast { position: fixed; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--ink); color: var(--paper); padding: 8px 14px; border-radius: 6px; font-size: 14px; z-index: 20; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <span class="eyebrow">Group photo → pose sheet</span>
+    <h1>拍照 Pose 範本</h1>
+    <p class="lede">載入一張團體照，把每個人框起來，每一格就是一個可以照著擺的姿勢。框好之後按「開始練習」，全螢幕一張一張看，還能設定自動換下一個。</p>
+  </header>
+
+  <section class="table" aria-label="團體照">
+    <div class="table-head">
+      <h2>1 · 框出每個人</h2>
+      <div class="row">
+        <label class="btn" for="file">載入照片</label>
+        <input id="file" type="file" accept="image/*" hidden>
+        <button class="btn" id="clearBoxes" hidden>清除所有框</button>
+        <button class="btn" id="removePhoto" hidden>移除照片</button>
+      </div>
+    </div>
+    <div id="drop" class="drop">
+      <strong>把團體照拖進來，或按「載入照片」，也可以直接貼上（Ctrl / ⌘ + V）</strong>
+      <span>原圖：<a href="https://www.nogizaka46.com/images/46/93e/41ad4c60e90c68aa2c57c1580c6b8.jpg" target="_blank" rel="noopener">乃木坂46 團體照</a>（先另存到裝置，再載入這裡）</span>
+      <span class="hint">照片只存在你自己的瀏覽器，不會上傳。</span>
+    </div>
+    <div id="stageWrap" hidden>
+      <div id="stage" class="stagebox"><img id="photo" alt="載入的團體照"></div>
+      <p class="hint" style="margin-top:10px">在照片上拖曳畫出方框，一人一格。點方框可以選取，按 × 刪除。</p>
+    </div>
+  </section>
+
+  <section style="display:grid;gap:16px" aria-label="姿勢範本">
+    <div class="sheet-head">
+      <div style="display:grid;gap:4px">
+        <h2>2 · 姿勢範本</h2>
+        <span id="sampleNote" class="sample-note">目前顯示的是內建範例，載入照片後會換成你框的人</span>
+      </div>
+      <div class="row">
+        <button class="btn" id="shuffleBtn">隨機一個</button>
+        <button class="btn primary" id="practiceBtn">開始練習</button>
+      </div>
+    </div>
+    <div id="grid" class="grid"></div>
+  </section>
+</div>
+
+<div id="practice" class="practice" hidden role="dialog" aria-label="練習模式">
+  <div class="top">
+    <div>
+      <div class="title" id="pTitle"></div>
+      <div class="count" id="pCount"></div>
+    </div>
+    <button class="btn" id="pClose">關閉 (Esc)</button>
+  </div>
+  <div style="position:relative;min-height:0">
+    <canvas id="pCanvas"></canvas>
+    <div class="big-count" id="bigCount" hidden></div>
+  </div>
+  <div style="display:grid;gap:10px">
+    <div class="progress"><i id="pBar"></i></div>
+    <div class="ctrl">
+      <button class="btn" id="pPrev">← 上一個</button>
+      <button class="btn" id="pNext">下一個 →</button>
+      <button class="btn" id="pRand">隨機</button>
+      <button class="btn" id="pMirror" title="左右翻轉，像照鏡子一樣比較好模仿">鏡像</button>
+      <label for="pInterval" class="count">自動換</label>
+      <select id="pInterval">
+        <option value="0">關閉</option>
+        <option value="5">每 5 秒</option>
+        <option value="8">每 8 秒</option>
+        <option value="12">每 12 秒</option>
+        <option value="20">每 20 秒</option>
+      </select>
+      <button class="btn" id="pCountdown">3 秒倒數</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(() => {
+  // ---------- built-in examples (stick figures, shown until a photo is loaded) ----------
+  const STAND = { head:[50,22], neck:[50,34], ls:[38,38], rs:[62,38], lh:[43,82], rh:[57,82], lk:[42,112], rk:[58,112], lf:[41,145], rf:[59,145] };
+  const SAMPLES = [
+    { name: "臉旁比 YA", cue: "單手在臉頰旁比 V，下巴微收，另一手自然垂下。", j: { le:[34,60], la:[33,80], re:[70,50], ra:[60,25] }, extra: "v" },
+    { name: "雙手叉腰", cue: "手肘往外打開，肩膀放鬆，重心放在一隻腳。", j: { le:[25,60], la:[42,78], re:[75,60], ra:[58,78] } },
+    { name: "頭上比愛心", cue: "雙手在頭頂圍成愛心，手肘往外撐開。", j: { le:[28,22], la:[47,5], re:[72,22], ra:[53,5] }, extra: "heart" },
+    { name: "雙手托腮", cue: "手背貼著臉頰，手肘收在胸前，眼睛看鏡頭。", j: { le:[40,64], la:[44,30], re:[60,64], ra:[56,30] } },
+    { name: "蹲下手放膝", cue: "蹲低、雙手放膝蓋，前排最常見的站位。", body: { head:[50,62], neck:[50,74], ls:[38,78], rs:[62,78], lh:[43,110], rh:[57,110], lk:[32,100], rk:[68,100], lf:[40,145], rf:[60,145] }, j: { le:[30,92], la:[33,100], re:[70,92], ra:[67,100] } },
+    { name: "握拳加油", cue: "雙拳舉到下巴高度，笑開一點。", j: { le:[30,58], la:[39,42], re:[70,58], ra:[61,42] }, extra: "fist" },
+    { name: "雙手交握在前", cue: "雙手輕握放在腰前，站姿端正，適合正式合照。", j: { le:[36,62], la:[48,80], re:[64,62], ra:[52,80] } },
+    { name: "單手揮手交叉腳", cue: "一手高舉揮手，雙腳交叉，身體微微側。", body: { ...STAND, lk:[47,112], rk:[53,112], lf:[57,145], rf:[43,145] }, j: { le:[34,60], la:[34,80], re:[73,26], ra:[78,8] } },
+  ];
+
+  // ---------- state ----------
+  let img = null;          // HTMLImageElement of the loaded photo
+  let imgBlob = null;
+  let boxes = [];          // {id, x, y, w, h, name} normalized 0..1
+  let selected = null;
+  let seq = 1;
+
+  const $ = (id) => document.getElementById(id);
+  const grid = $("grid"), stage = $("stage"), photo = $("photo");
+
+  // ---------- persistence (IndexedDB; optional) ----------
+  const DB = { db: null };
+  function openDB() {
+    return new Promise((res) => {
+      try {
+        const r = indexedDB.open("pose-sheet", 1);
+        r.onupgradeneeded = () => r.result.createObjectStore("kv");
+        r.onsuccess = () => { DB.db = r.result; res(); };
+        r.onerror = () => res();
+      } catch { res(); }
+    });
+  }
+  function dbGet(k) {
+    return new Promise((res) => {
+      try { const t = DB.db.transaction("kv").objectStore("kv").get(k); t.onsuccess = () => res(t.result); t.onerror = () => res(null); }
+      catch { res(null); }
+    });
+  }
+  function dbSet(k, v) { try { DB.db.transaction("kv", "readwrite").objectStore("kv").put(v, k); } catch {} }
+  const save = () => dbSet("state", { blob: imgBlob, boxes, seq });
+
+  // ---------- items shown in sheet & practice ----------
+  function items() {
+    if (!img) return SAMPLES.map((s, i) => ({ kind: "sample", i, name: s.name, cue: s.cue }));
+    return boxes.map((b) => ({ kind: "box", b, name: b.name || `第 ${b.id} 號`, cue: "" }));
+  }
+
+  // ---------- drawing ----------
+  function drawStick(ctx, W, H, s) {
+    const body = s.body || STAND, j = { ...body, ...s.j };
+    const scale = Math.min(W / 100, H / 160), ox = (W - 100 * scale) / 2, oy = (H - 160 * scale) / 2;
+    const P = (p) => [ox + p[0] * scale, oy + p[1] * scale];
+    const css = getComputedStyle(document.documentElement);
+    const ink = "#f3edf6", acc = css.getPropertyValue("--frame").trim() || "#f2b73a";
+    ctx.lineCap = "round"; ctx.lineJoin = "round"; ctx.strokeStyle = ink; ctx.lineWidth = 3.2 * scale;
+    const line = (...pts) => { ctx.beginPath(); pts.forEach((p, i) => { const [x, y] = P(p); i ? ctx.lineTo(x, y) : ctx.moveTo(x, y); }); ctx.stroke(); };
+    const mid = (a, b) => [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2];
+    line(j.ls, j.rs); line(j.neck, mid(j.lh, j.rh)); line(j.lh, j.rh);
+    line(j.lh, j.lk, j.lf); line(j.rh, j.rk, j.rf);
+    ctx.strokeStyle = acc; line(j.ls, j.le, j.la); line(j.rs, j.re, j.ra);
+    ctx.strokeStyle = ink; line(j.neck, j.head);
+    const [hx, hy] = P(j.head); ctx.fillStyle = ink; ctx.beginPath(); ctx.arc(hx, hy, 9 * scale, 0, 7); ctx.fill();
+    ctx.fillStyle = acc;
+    [j.la, j.ra].forEach((p) => { const [x, y] = P(p); ctx.beginPath(); ctx.arc(x, y, (s.extra === "fist" ? 3.4 : 2.4) * scale, 0, 7); ctx.fill(); });
+    if (s.extra === "heart") {
+      const [x, y] = P([50, 10]), r = 4 * scale; ctx.beginPath();
+      ctx.moveTo(x, y + r); ctx.bezierCurveTo(x - 2.2 * r, y - 0.2 * r, x - 0.8 * r, y - 1.8 * r, x, y - 0.6 * r);
+      ctx.bezierCurveTo(x + 0.8 * r, y - 1.8 * r, x + 2.2 * r, y - 0.2 * r, x, y + r); ctx.fill();
+    }
+    if (s.extra === "v") { ctx.strokeStyle = acc; ctx.lineWidth = 2 * scale; line([58, 26], [55, 17]); line([60, 25], [62, 16]); }
+  }
+
+  function drawItem(canvas, it) {
+    const dpr = window.devicePixelRatio || 1;
+    const r = canvas.getBoundingClientRect();
+    const W = Math.max(1, Math.round(r.width * dpr)), H = Math.max(1, Math.round(r.height * dpr));
+    canvas.width = W; canvas.height = H;
+    const ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, W, H);
+    if (it.kind === "sample") return drawStick(ctx, W, H, SAMPLES[it.i]);
+    const b = it.b, sw = b.w * img.naturalWidth, sh = b.h * img.naturalHeight;
+    const k = Math.min(W / sw, H / sh), dw = sw * k, dh = sh * k;
+    ctx.imageSmoothingQuality = "high";
+    ctx.drawImage(img, b.x * img.naturalWidth, b.y * img.naturalHeight, sw, sh, (W - dw) / 2, (H - dh) / 2, dw, dh);
+  }
+
+  // ---------- render sheet ----------
+  function renderGrid() {
+    const list = items();
+    $("sampleNote").hidden = !!img;
+    $("practiceBtn").disabled = $("shuffleBtn").disabled = !list.length;
+    grid.innerHTML = "";
+    if (!list.length) {
+      grid.innerHTML = '<div class="empty" style="grid-column:1/-1">還沒有框任何人。在上面的照片拖曳畫出方框，就會出現在這裡。</div>';
+      return;
+    }
+    list.forEach((it, idx) => {
+      const card = document.createElement("article");
+      card.className = "card" + (it.kind === "box" && it.b.id === selected ? " sel" : "");
+      const no = it.kind === "box" ? it.b.id : idx + 1;
+      card.innerHTML = `<canvas aria-label="姿勢 ${no}"></canvas>
+        <div class="meta">
+          <span class="frame-no">FRAME ${String(no).padStart(2, "0")}${it.kind === "sample" ? " · 範例" : ""}</span>
+          ${it.kind === "box"
+            ? `<input id="name-${it.b.id}" value="" placeholder="幫這個姿勢取名（例：比 YA）" aria-label="姿勢名稱">`
+            : `<strong>${it.name}</strong><p class="cue">${it.cue}</p>`}
+        </div>`;
+      grid.appendChild(card);
+      const cv = card.querySelector("canvas");
+      cv.addEventListener("click", () => openPractice(idx));
+      if (it.kind === "box") {
+        const inp = card.querySelector("input");
+        inp.value = it.b.name || "";
+        inp.addEventListener("input", () => { it.b.name = inp.value; renderBoxes(); save(); });
+        card.addEventListener("click", (e) => { if (e.target !== cv) select(it.b.id, false); });
+      }
+      requestAnimationFrame(() => drawItem(cv, it));
+    });
+  }
+
+  // ---------- boxes on photo ----------
+  function renderBoxes() {
+    stage.querySelectorAll(".box").forEach((n) => n.remove());
+    boxes.forEach((b) => {
+      const d = document.createElement("div");
+      d.className = "box" + (b.id === selected ? " sel" : "");
+      Object.assign(d.style, { left: b.x * 100 + "%", top: b.y * 100 + "%", width: b.w * 100 + "%", height: b.h * 100 + "%" });
+      const label = String(b.id).padStart(2, "0") + (b.name ? " " + b.name : "");
+      d.innerHTML = `<span class="tag"></span><button class="x" aria-label="刪除第 ${b.id} 號">×</button>`;
+      d.querySelector(".tag").textContent = label;
+      d.addEventListener("pointerdown", (e) => e.stopPropagation());
+      d.addEventListener("click", (e) => {
+        if (e.target.classList.contains("x")) { boxes = boxes.filter((x) => x.id !== b.id); if (selected === b.id) selected = null; refresh(); save(); }
+        else select(b.id, true);
+      });
+      stage.appendChild(d);
+    });
+    $("clearBoxes").hidden = !boxes.length;
+  }
+
+  function select(id, scroll) {
+    selected = id; renderBoxes();
+    grid.querySelectorAll(".card").forEach((c, i) => c.classList.toggle("sel", boxes[i] && boxes[i].id === id));
+    if (scroll) { const c = grid.children[boxes.findIndex((b) => b.id === id)]; c && c.scrollIntoView({ behavior: "smooth", block: "nearest" }); }
+  }
+
+  function refresh() { renderBoxes(); renderGrid(); }
+
+  // drag to draw
+  let drag = null;
+  const rel = (e) => { const r = stage.getBoundingClientRect(); return [Math.min(1, Math.max(0, (e.clientX - r.left) / r.width)), Math.min(1, Math.max(0, (e.clientY - r.top) / r.height))]; };
+  stage.addEventListener("pointerdown", (e) => {
+    if (!img) return;
+    stage.setPointerCapture(e.pointerId);
+    const [x, y] = rel(e);
+    const el = document.createElement("div"); el.className = "box temp"; stage.appendChild(el);
+    drag = { x, y, el };
+  });
+  stage.addEventListener("pointermove", (e) => {
+    if (!drag) return;
+    const [x, y] = rel(e);
+    drag.r = { x: Math.min(x, drag.x), y: Math.min(y, drag.y), w: Math.abs(x - drag.x), h: Math.abs(y - drag.y) };
+    Object.assign(drag.el.style, { left: drag.r.x * 100 + "%", top: drag.r.y * 100 + "%", width: drag.r.w * 100 + "%", height: drag.r.h * 100 + "%" });
+  });
+  const endDrag = () => {
+    if (!drag) return;
+    drag.el.remove();
+    const r = drag.r; drag = null;
+    if (!r || r.w < 0.015 || r.h < 0.02) return;
+    const b = { id: seq++, ...r, name: "" };
+    boxes.push(b); selected = b.id; refresh(); save();
+  };
+  stage.addEventListener("pointerup", endDrag);
+  stage.addEventListener("pointercancel", endDrag);
+
+  // ---------- loading the photo ----------
+  function loadBlob(blob, keepBoxes) {
+    if (!blob || !/^image\//.test(blob.type)) { toast("這不是圖片檔，請換一張 JPG 或 PNG。"); return; }
+    const url = URL.createObjectURL(blob);
+    const im = new Image();
+    im.onload = () => {
+      img = im; imgBlob = blob; photo.src = url;
+      if (!keepBoxes) { boxes = []; seq = 1; selected = null; }
+      $("drop").hidden = true; $("stageWrap").hidden = false; $("removePhoto").hidden = false;
+      refresh(); if (!keepBoxes) save();
+    };
+    im.onerror = () => toast("讀不到這張圖片，請換一個檔案試試。");
+    im.src = url;
+  }
+  $("file").addEventListener("change", (e) => { const f = e.target.files[0]; if (f) loadBlob(f); e.target.value = ""; });
+  const drop = $("drop");
+  ["dragenter", "dragover"].forEach((t) => drop.addEventListener(t, (e) => { e.preventDefault(); drop.classList.add("over"); }));
+  ["dragleave", "drop"].forEach((t) => drop.addEventListener(t, (e) => { e.preventDefault(); drop.classList.remove("over"); }));
+  drop.addEventListener("drop", (e) => { const f = e.dataTransfer.files[0]; if (f) loadBlob(f); });
+  document.addEventListener("paste", (e) => {
+    const f = [...(e.clipboardData?.files || [])].find((x) => x.type.startsWith("image/"));
+    if (f) loadBlob(f);
+  });
+
+  // two-step confirm buttons (no confirm() in the viewer)
+  function armed(btn, label, fn) {
+    const orig = btn.textContent; let t;
+    btn.addEventListener("click", () => {
+      if (btn.dataset.armed) { clearTimeout(t); delete btn.dataset.armed; btn.textContent = orig; fn(); return; }
+      btn.dataset.armed = "1"; btn.textContent = label;
+      t = setTimeout(() => { delete btn.dataset.armed; btn.textContent = orig; }, 3000);
+    });
+  }
+  armed($("clearBoxes"), "再按一次確認清除", () => { boxes = []; selected = null; refresh(); save(); toast("已清除所有框"); });
+  armed($("removePhoto"), "再按一次確認移除", () => {
+    img = imgBlob = null; boxes = []; selected = null; seq = 1; photo.removeAttribute("src");
+    $("drop").hidden = false; $("stageWrap").hidden = true; $("removePhoto").hidden = true;
+    refresh(); save(); toast("已移除照片，換回內建範例");
+  });
+
+  // ---------- practice mode ----------
+  let pIdx = 0, timer = null, tStart = 0, raf = null, wake = null;
+  const pc = $("pCanvas");
+  function showP() {
+    const list = items(); if (!list.length) return;
+    pIdx = (pIdx + list.length) % list.length;
+    const it = list[pIdx];
+    $("pTitle").textContent = it.name;
+    $("pCount").textContent = `${pIdx + 1} / ${list.length}${it.cue ? " · " + it.cue : ""}`;
+    drawItem(pc, it);
+    tStart = performance.now();
+  }
+  function openPractice(i) {
+    pIdx = i ?? 0; $("practice").hidden = false; document.body.style.overflow = "hidden";
+    requestAnimationFrame(showP);
+    try { navigator.wakeLock?.request("screen").then((w) => (wake = w)).catch(() => {}); } catch {}
+    startAuto();
+  }
+  function closePractice() {
+    $("practice").hidden = true; document.body.style.overflow = ""; stopAuto(); $("bigCount").hidden = true;
+    try { wake?.release(); } catch {} wake = null;
+  }
+  function step(d) { pIdx += d; showP(); }
+  function rand() { const n = items().length; if (n < 2) return showP(); let k; do { k = Math.floor(Math.random() * n); } while (k === pIdx); pIdx = k; showP(); }
+  function stopAuto() { cancelAnimationFrame(raf); raf = null; $("pBar").style.width = "0"; }
+  function startAuto() {
+    stopAuto();
+    const sec = +$("pInterval").value; if (!sec) return;
+    tStart = performance.now();
+    const tick = (now) => {
+      const p = (now - tStart) / (sec * 1000);
+      if (p >= 1) { step(1); } else $("pBar").style.width = p * 100 + "%";
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+  }
+  $("pInterval").addEventListener("change", startAuto);
+  $("pPrev").addEventListener("click", () => step(-1));
+  $("pNext").addEventListener("click", () => step(1));
+  $("pRand").addEventListener("click", rand);
+  $("pClose").addEventListener("click", closePractice);
+  $("pMirror").addEventListener("click", (e) => { const on = pc.classList.toggle("mirror"); e.currentTarget.classList.toggle("on", on); });
+  $("pCountdown").addEventListener("click", () => {
+    const bc = $("bigCount"); let n = 3; bc.hidden = false; bc.textContent = n;
+    const iv = setInterval(() => { n--; if (n > 0) bc.textContent = n; else { bc.textContent = "📸"; clearInterval(iv); setTimeout(() => (bc.hidden = true), 700); } }, 1000);
+  });
+  $("practiceBtn").addEventListener("click", () => openPractice(0));
+  $("shuffleBtn").addEventListener("click", () => { openPractice(Math.floor(Math.random() * items().length)); });
+  document.addEventListener("keydown", (e) => {
+    if ($("practice").hidden) return;
+    if (e.key === "Escape") closePractice();
+    else if (e.key === "ArrowRight" || e.key === " ") { e.preventDefault(); step(1); }
+    else if (e.key === "ArrowLeft") step(-1);
+    else if (e.key.toLowerCase() === "r") rand();
+  });
+  let rt; window.addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(() => { renderGrid(); if (!$("practice").hidden) showP(); }, 150); });
+
+  function toast(msg) {
+    const t = document.createElement("div"); t.className = "toast"; t.textContent = msg; t.setAttribute("role", "status");
+    document.body.appendChild(t); setTimeout(() => t.remove(), 2400);
+  }
+
+  // ---------- boot ----------
+  renderGrid();
+  openDB().then(() => dbGet("state")).then((s) => {
+    if (s && s.blob) { boxes = s.boxes || []; seq = s.seq || boxes.length + 1; loadBlob(s.blob, true); }
+  });
+})();
+</script>
+</body>
+</html>
