@@ -6,6 +6,41 @@
       "file": "photos/sorezore-no-isu.jpg",
       "w": 600,
       "h": 532
+    },
+    {
+      "id": "zehi-ni-oyobazu-1",
+      "title": "乃木坂46「是非に及ばず」封面 ①",
+      "file": "photos/zehi-ni-oyobazu-1.jpg",
+      "w": 323,
+      "h": 320
+    },
+    {
+      "id": "zehi-ni-oyobazu-2",
+      "title": "乃木坂46「是非に及ばず」封面 ②",
+      "file": "photos/zehi-ni-oyobazu-2.jpg",
+      "w": 323,
+      "h": 320
+    },
+    {
+      "id": "zehi-ni-oyobazu-3",
+      "title": "乃木坂46「是非に及ばず」封面 ③",
+      "file": "photos/zehi-ni-oyobazu-3.jpg",
+      "w": 323,
+      "h": 320
+    },
+    {
+      "id": "zehi-ni-oyobazu-4",
+      "title": "乃木坂46「是非に及ばず」封面 ④",
+      "file": "photos/zehi-ni-oyobazu-4.jpg",
+      "w": 323,
+      "h": 320
+    },
+    {
+      "id": "zehi-ni-oyobazu-5",
+      "title": "乃木坂46「是非に及ばず」封面 ⑤",
+      "file": "photos/zehi-ni-oyobazu-5.jpg",
+      "w": 1288,
+      "h": 1278
     }
   ],
   "poses": [
@@ -174,6 +209,150 @@
       "photo": "sorezore-no-isu",
       "box": [450, 202, 478, 262],
       "name": "雙手在胸前、小碎步",
+      "gender": "female",
+      "tags": ["動態"]
+    },
+    {
+      "id": "zehi-ni-oyobazu-1-01",
+      "photo": "zehi-ni-oyobazu-1",
+      "box": [2, 120, 112, 320],
+      "name": "一手舉起、身體側傾微笑",
+      "gender": "female",
+      "tags": ["互動"]
+    },
+    {
+      "id": "zehi-ni-oyobazu-1-02",
+      "photo": "zehi-ni-oyobazu-1",
+      "box": [85, 110, 168, 320],
+      "name": "身體前傾、手搭隔壁肩膀",
+      "gender": "female",
+      "tags": ["互動"]
+    },
+    {
+      "id": "zehi-ni-oyobazu-1-03",
+      "photo": "zehi-ni-oyobazu-1",
+      "box": [150, 105, 232, 320],
+      "name": "勾著隔壁的手、屈膝往旁靠",
+      "gender": "female",
+      "tags": ["互動"]
+    },
+    {
+      "id": "zehi-ni-oyobazu-1-04",
+      "photo": "zehi-ni-oyobazu-1",
+      "box": [195, 112, 258, 310],
+      "name": "頭靠隔壁、手環住對方",
+      "gender": "female",
+      "tags": ["互動"]
+    },
+    {
+      "id": "zehi-ni-oyobazu-1-05",
+      "photo": "zehi-ni-oyobazu-1",
+      "box": [245, 92, 323, 320],
+      "name": "雙手打開、挺胸大笑",
+      "gender": "female",
+      "tags": ["站姿"]
+    },
+    {
+      "id": "zehi-ni-oyobazu-2-01",
+      "photo": "zehi-ni-oyobazu-2",
+      "box": [0, 85, 128, 320],
+      "name": "一手往外甩、回頭看鏡頭",
+      "gender": "female",
+      "tags": ["動態"]
+    },
+    {
+      "id": "zehi-ni-oyobazu-2-02",
+      "photo": "zehi-ni-oyobazu-2",
+      "box": [68, 68, 145, 240],
+      "name": "單手往旁伸、側身",
+      "gender": "female",
+      "tags": ["手勢"]
+    },
+    {
+      "id": "zehi-ni-oyobazu-2-03",
+      "photo": "zehi-ni-oyobazu-2",
+      "box": [140, 70, 208, 240],
+      "name": "一手舉到臉旁、身體轉向",
+      "gender": "female",
+      "tags": ["手勢"]
+    },
+    {
+      "id": "zehi-ni-oyobazu-2-04",
+      "photo": "zehi-ni-oyobazu-2",
+      "box": [145, 98, 292, 320],
+      "name": "雙手拉起裙擺、身體前傾",
+      "gender": "female",
+      "tags": ["動態"]
+    },
+    {
+      "id": "zehi-ni-oyobazu-2-05",
+      "photo": "zehi-ni-oyobazu-2",
+      "box": [245, 70, 323, 260],
+      "name": "雙手往後展開",
+      "gender": "female",
+      "tags": ["動態"]
+    },
+    {
+      "id": "zehi-ni-oyobazu-3-01",
+      "photo": "zehi-ni-oyobazu-3",
+      "box": [0, 78, 98, 200],
+      "name": "從上方探頭、歪頭看鏡頭",
+      "gender": "female",
+      "tags": ["特寫"]
+    },
+    {
+      "id": "zehi-ni-oyobazu-3-02",
+      "photo": "zehi-ni-oyobazu-3",
+      "box": [10, 150, 118, 320],
+      "name": "身體前傾靠近鏡頭",
+      "gender": "female",
+      "tags": ["特寫"]
+    },
+    {
+      "id": "zehi-ni-oyobazu-3-03",
+      "photo": "zehi-ni-oyobazu-3",
+      "box": [95, 168, 218, 320],
+      "name": "手托下巴、近距離看鏡頭",
+      "gender": "female",
+      "tags": ["特寫"]
+    },
+    {
+      "id": "zehi-ni-oyobazu-3-04",
+      "photo": "zehi-ni-oyobazu-3",
+      "box": [195, 170, 258, 320],
+      "name": "微微歪頭、甜笑",
+      "gender": "female",
+      "tags": ["特寫"]
+    },
+    {
+      "id": "zehi-ni-oyobazu-3-05",
+      "photo": "zehi-ni-oyobazu-3",
+      "box": [235, 92, 323, 262],
+      "name": "手撥耳邊頭髮、從旁探頭",
+      "gender": "female",
+      "tags": ["特寫"]
+    },
+    {
+      "id": "zehi-ni-oyobazu-4-01",
+      "photo": "zehi-ni-oyobazu-4",
+      "box": [15, 40, 170, 320],
+      "name": "背靠背牽手、一手舉高揮",
+      "gender": "female",
+      "tags": ["互動"]
+    },
+    {
+      "id": "zehi-ni-oyobazu-4-02",
+      "photo": "zehi-ni-oyobazu-4",
+      "box": [140, 20, 312, 320],
+      "name": "背靠背牽手、一手舉高",
+      "gender": "female",
+      "tags": ["互動"]
+    },
+    {
+      "id": "zehi-ni-oyobazu-5-01",
+      "photo": "zehi-ni-oyobazu-5",
+      "box": [145, 165, 1175, 1278],
+      "name": "轉圈甩裙、一手往後撩",
       "gender": "female",
       "tags": ["動態"]
     }
