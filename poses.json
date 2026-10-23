@@ -41,6 +41,27 @@
       "file": "photos/zehi-ni-oyobazu-5.jpg",
       "w": 1288,
       "h": 1278
+    },
+    {
+      "id": "white-carousel-1",
+      "title": "乃木坂46 白色洋裝・旋轉木馬 ①",
+      "file": "photos/white-carousel-1.jpg",
+      "w": 1179,
+      "h": 2015
+    },
+    {
+      "id": "white-carousel-2",
+      "title": "乃木坂46 白色洋裝・旋轉木馬 ②",
+      "file": "photos/white-carousel-2.jpg",
+      "w": 1179,
+      "h": 2000
+    },
+    {
+      "id": "white-carousel-3",
+      "title": "乃木坂46 白色洋裝・旋轉木馬 ③",
+      "file": "photos/white-carousel-3.jpg",
+      "w": 1179,
+      "h": 2178
     }
   ],
   "poses": [
@@ -355,6 +376,150 @@
       "name": "轉圈甩裙、一手往後撩",
       "gender": "female",
       "tags": ["動態"]
+    },
+    {
+      "id": "white-carousel-1-01",
+      "photo": "white-carousel-1",
+      "box": [45, 940, 368, 1810],
+      "name": "坐扶手旁、身體斜靠、雙手疊在腿上",
+      "gender": "female",
+      "tags": ["坐姿"]
+    },
+    {
+      "id": "white-carousel-1-02",
+      "photo": "white-carousel-1",
+      "box": [248, 775, 450, 1360],
+      "name": "後排站、手放胸前、身體斜靠",
+      "gender": "female",
+      "tags": ["站姿"]
+    },
+    {
+      "id": "white-carousel-1-03",
+      "photo": "white-carousel-1",
+      "box": [398, 1038, 645, 1405],
+      "name": "坐著、雙手捧在胸前",
+      "gender": "female",
+      "tags": ["坐姿"]
+    },
+    {
+      "id": "white-carousel-1-04",
+      "photo": "white-carousel-1",
+      "box": [405, 1278, 915, 1855],
+      "name": "坐在地上、雙手撐地、裙擺攤開",
+      "gender": "female",
+      "tags": ["坐姿"]
+    },
+    {
+      "id": "white-carousel-1-05",
+      "photo": "white-carousel-1",
+      "box": [705, 1068, 1050, 1660],
+      "name": "坐床邊、雙手放膝上",
+      "gender": "female",
+      "tags": ["坐姿"]
+    },
+    {
+      "id": "white-carousel-1-06",
+      "photo": "white-carousel-1",
+      "box": [922, 880, 1179, 1600],
+      "name": "站直、手自然垂下看鏡頭",
+      "gender": "female",
+      "tags": ["站姿"]
+    },
+    {
+      "id": "white-carousel-2-01",
+      "photo": "white-carousel-2",
+      "box": [0, 868, 225, 1340],
+      "name": "站姿、雙手交疊放腹前",
+      "gender": "female",
+      "tags": ["站姿"]
+    },
+    {
+      "id": "white-carousel-2-02",
+      "photo": "white-carousel-2",
+      "box": [158, 702, 480, 1170],
+      "name": "撐陽傘、雙手握傘柄",
+      "gender": "female",
+      "tags": ["手勢"]
+    },
+    {
+      "id": "white-carousel-2-03",
+      "photo": "white-carousel-2",
+      "box": [502, 808, 705, 1295],
+      "name": "雙手交疊在腰前、肩膀微側",
+      "gender": "female",
+      "tags": ["站姿"]
+    },
+    {
+      "id": "white-carousel-2-04",
+      "photo": "white-carousel-2",
+      "box": [832, 868, 975, 1400],
+      "name": "站在旋轉木馬旁、手輕扶",
+      "gender": "female",
+      "tags": ["站姿"]
+    },
+    {
+      "id": "white-carousel-2-05",
+      "photo": "white-carousel-2",
+      "box": [120, 1122, 540, 1752],
+      "name": "坐沙發、身體前傾、手放膝上",
+      "gender": "female",
+      "tags": ["坐姿"]
+    },
+    {
+      "id": "white-carousel-2-06",
+      "photo": "white-carousel-2",
+      "box": [510, 1302, 840, 1805],
+      "name": "坐地上、手撐身旁、側身倚靠",
+      "gender": "female",
+      "tags": ["坐姿"]
+    },
+    {
+      "id": "white-carousel-2-07",
+      "photo": "white-carousel-2",
+      "box": [780, 1070, 1179, 1790],
+      "name": "坐椅子、雙手交疊放腿上",
+      "gender": "female",
+      "tags": ["坐姿"]
+    },
+    {
+      "id": "white-carousel-3-01",
+      "photo": "white-carousel-3",
+      "box": [0, 792, 240, 1490],
+      "name": "坐在旋轉木馬上、側身回頭",
+      "gender": "female",
+      "tags": ["坐姿"]
+    },
+    {
+      "id": "white-carousel-3-02",
+      "photo": "white-carousel-3",
+      "box": [112, 1085, 398, 1940],
+      "name": "一手搭木馬、站直",
+      "gender": "female",
+      "tags": ["站姿"]
+    },
+    {
+      "id": "white-carousel-3-03",
+      "photo": "white-carousel-3",
+      "box": [412, 1062, 758, 2022],
+      "name": "抱著毛皮披肩、正面站",
+      "gender": "female",
+      "tags": ["站姿"]
+    },
+    {
+      "id": "white-carousel-3-04",
+      "photo": "white-carousel-3",
+      "box": [750, 1070, 1050, 1932],
+      "name": "一手扶旁邊的木馬、微側身",
+      "gender": "female",
+      "tags": ["站姿"]
+    },
+    {
+      "id": "white-carousel-3-05",
+      "photo": "white-carousel-3",
+      "box": [960, 928, 1179, 1670],
+      "name": "一手舉高扶柱子",
+      "gender": "female",
+      "tags": ["手勢"]
     }
   ]
 }
